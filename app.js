@@ -1,23 +1,21 @@
 const dotenv = require("dotenv");
 const express = require("express");
 
-
 // Enable express
 const app = express();
 dotenv.config({ path: './config.env' });
-const database = require("./databaseConnection/connection");
 
 
 // // Enable CORS for all routes
 // app.use(cors());
 
 const port = process.env.PORT;
-const connectionString = process.env.DATABASE;
-
 
 // Async function to start the server after MongoDB connection is initialized
 async function startServer() {
+   
   try {
+    const database = require("./databaseConnection/connection");
     // Wait for MongoDB connection to be initialized
     await database.initializeMongoDB();
 
