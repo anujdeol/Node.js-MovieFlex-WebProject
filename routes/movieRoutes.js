@@ -10,5 +10,8 @@ router
 router
   .route("/:id")
   .get(movieController.getMovie)
-  .patch(movieController.updateMovie)
+  .put(movieController.updateMovie)
   .delete(movieController.deleteMovie);
+
+
+  module.exports=router;

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
-dotenv.config({ path: "./config.env" });
 const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
 
 const connectionString = process.env.DATABASE;
 
@@ -23,3 +24,8 @@ async function initializeMongoDB() {
     });
   });
 }
+
+module.exports = {
+    initializeMongoDB,
+  };
+
