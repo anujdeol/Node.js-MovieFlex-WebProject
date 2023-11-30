@@ -1,27 +1,36 @@
 const dotenv = require("dotenv");
-var express = require("express");
-var mongoose = require("mongoose");
-var app = express();
+const express = require("express");
+
+
+// Enable express
+const app = express();
 dotenv.config({ path: './config.env' });
+const database = require("./databaseConnection/connection");
 
 
-var port = process.env.PORT;
+// // Enable CORS for all routes
+// app.use(cors());
 
+const port = process.env.PORT;
 const connectionString = process.env.DATABASE;
 
 
-// Connect to MongoDB
-mongoose.connect(connectionString);
+// Async function to start the server after MongoDB connection is initialized
+async function startServer() {
+  try {
+    // Wait for MongoDB connection to be initialized
+    await database.initializeMongoDB();
 
-// Check if the connection is successful
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-db.once("open", function () {
-  console.log("Connected to the MongoDB database");
-});
+    // Your routes and other middleware go here
 
-// Your routes and other middleware go here
+    // Start the server
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Error during server startup:", error);
+  }
+}
 
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+// Call the function to start the server
+startServer();
