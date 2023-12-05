@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const database = require("./databaseConnection/connection");
 const movieRoutes = require("./routes/movieRoutes");
+const rootRoutes = require("./routes/rootRoutes");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,8 +24,7 @@ app.engine(
 );
 
 // Set the views folder
-app.set('views', path.join(__dirname, 'views'));
-
+app.set("views", path.join(__dirname, "views"));
 
 // Set the view engine
 app.set("view engine", ".hbs");
@@ -35,6 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.use("/api/movies", movieRoutes);
+app.use("/", rootRoutes);
 
 // Async function to start the server after MongoDB connection is initialized
 async function startServer() {
@@ -52,7 +53,4 @@ async function startServer() {
 // Call the function to start the server
 startServer();
 
-
 //////
-
-
