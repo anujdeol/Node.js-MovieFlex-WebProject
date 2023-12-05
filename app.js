@@ -1,20 +1,40 @@
-const dotenv = require("dotenv");
 const express = require("express");
-
-// Enable express
-const app = express();
-dotenv.config({ path: "./config.env" });
+const exphbs = require("express-handlebars");
+const bodyParser = require("body-parser");
+const path = require("path");
 const database = require("./databaseConnection/connection");
+const movieRoutes = require("./routes/movieRoutes");
 
-const movieRoutes = require("./routes/movieRoutes")
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Set up Handlebars as the view engine
+app.engine(
+  ".hbs",
+  exphbs.engine({
+    extname: ".hbs",
+    defaultLayout: "main",
+    // Add runtime options to control prototype access
+    runtimeOptions: {
+      allowProtoMethodsByDefault: true,
+      allowProtoPropertiesByDefault: true,
+    },
+  })
+);
+
+// Set the views folder
+app.set('views', path.join(__dirname, 'views'));
 
 
+// Set the view engine
+app.set("view engine", ".hbs");
 
-// // Enable CORS for all routes
-// app.use(cors());
+// Other configurations
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
-const port = process.env.PORT;
-const connectionString = process.env.DATABASE;
+// Routes
+app.use("/api/movies", movieRoutes);
 
 // Async function to start the server after MongoDB connection is initialized
 async function startServer() {
@@ -23,16 +43,16 @@ async function startServer() {
     await database.initializeMongoDB();
     app.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
-      console.log(movieRoutes);
     });
   } catch (error) {
     console.error("Error during server startup:", error);
   }
 }
-app.use(express.json());
- app.use("/api/movies", movieRoutes);
-
-
 
 // Call the function to start the server
 startServer();
+
+
+//////
+
+

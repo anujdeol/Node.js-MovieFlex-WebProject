@@ -1,0 +1,21 @@
+<h1>List of Movies</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Runtime</th>
+        <th>Released</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each movies}}
+        <tr>
+          <td>{{this.title}}</td>
+          <td>{{this.year}}</td>
+          <td>{{this.runtime}}</td>
+          <td>{{this.released}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>

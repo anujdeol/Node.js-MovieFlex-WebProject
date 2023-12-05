@@ -1,36 +1,88 @@
-const movieModel = require("./../models/movies");
+const movieModel = require("./../models/moviesSchema");
+
+
+//home page
+
+exports.homePageLogin = (req, res) => {
+  console.log("login page called");
+  res.render('login', { title: 'LoginPage' });
+};
+
+exports.homePageRegister = (req, res) => {
+  console.log("register page called");
+  res.render('register', { title: 'Register Yourself!' });
+};
+
+//get all movies 
+//done
+// Assuming you have the necessary imports and setup for movieModel
 
 exports.getAllMovies = (req, res) => {
-
-  const limit = req.query.limit || 10;
-  const page = req.query.page || 1;
+  const limit = req.body.limit || 5;
+  const page = req.body.page|| 1;
   
-  // const page = req.param.pageNo;
 
-     // use mongoose to get all todos in the database
-     console.log("quesry result"+req.query);
+  movieModel.find({}, (err, movies) => {
+      if (err) {
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+          return;
+      }
 
-     movieModel.find(function (err, movies) {
-    console.log("$$$$$$$$$" +movies)
-    // if there is an error retrieving, send the error otherwise send data
-    if (err) res.send(err);
-    res.json(movies); // return all employees in JSON format
-
-  }).skip((page-1)*1).limit(limit);
-
-
-
+      res.render('showMovies', { movies });
+  }).skip((page - 1) * 1).limit(limit);
 };
-exports.addMovie = (req, res) => {
 
-  const newMovieData = req.body; // Assuming the movie data is sent in the request body
-  const newMovie = new movieModel(newMovieData);
+
+// addMovie
+//done
+exports.addMovie = (req, res) => {
+  const movieData = {
+    title: req.body.title,
+    year: req.body.year,
+    runtime: req.body.runtime,
+    released: req.body.released,
+    poster: req.body.poster,
+    plot: req.body.plot,
+    fullplot: req.body.fullplot,
+    lastupdated: req.body.lastupdated,
+    type: req.body.type,
+    directors: req.body.directors,
+    imdb: {
+      rating: req.body.rating,
+      votes: req.body.votes,
+      id: req.body.id,
+    },
+    cast: req.body.cast,
+    countries: req.body.countries,
+    genres: req.body.genres,
+    tomatoes: {
+      viewer: {
+        rating: req.body.rating,
+        numReviews: req.body.numReviews,
+      },
+      lastUpdated: req.body.lastUpdated,
+    },
+    
+    num_mflix_comments: req.body.num_mflix_comments,
+  };
+
+  const newMovie = new movieModel(movieData);
 
   newMovie.save((err, movie) => {
-    if (err) res.status(500).send(err);
-    res.status(201).json(movie); // Return the newly created movie in JSON format
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    console.log("Movie added:", movie);
+    res.status(201).json({ message: 'Movie added successfully', movieId: movie._id });
   });
 };
+
+
+
+//by ID
+//done
 exports.getMovie = (req, res) => {
 
   const movieId = req.params.id; // Assuming the movie ID is passed as a route parameter
@@ -43,27 +95,40 @@ exports.getMovie = (req, res) => {
 
 
 };
+
+
+//DONE
 exports.updateMovie = (req, res) => {
-
-  const movieId = req.params.id; 
-
+  const movieId = req.params.id;
   const newTitle = req.body.title;
- 
-  movieModel.findByIdAndUpdate(movieId, { $set: { title: newTitle } }, { new: true }, (err, movie) => {
-    if (err) {
-      res.status(500).send(err);
-    } else if (!movie) {
-      res.status(404).json({ message: 'Movie not found' });
-    } else {
-      res.status(200).json(movie); // Return the updated movie in JSON format
+  console.log("title yhaaan"+newTitle);
+
+  // Using findByIdAndUpdate
+  movieModel.findByIdAndUpdate(
+    movieId,
+    { $set: { title: newTitle } },
+    { new: true },
+    (err, movie) => {
+      if (err) {
+        console.log("errorrrrrrr");
+        res.status(500).send(err);
+      } else if (!movie) {
+        console.log("not found");
+        res.status(404).json({ message: 'Movie not found' });
+      } else {
+        console.log(movie);
+        res.status(200).json(movie); // Return the updated movie in JSON format
+      }
     }
-  });
-
-
+  );
 };
+
+
+
+//delete movie
 exports.deleteMovie = (req, res) => {
 
-  const movieId = req.params.id; // Assuming the movie ID is passed as a route parameter
+  const movieId = req.params.id; 
 
   movieModel.findByIdAndRemove(movieId, (err, movie) => {
     if (err) res.status(500).send(err);
