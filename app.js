@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const database = require("./databaseConnection/connection");
 const movieRoutes = require("./routes/movieRoutes");
-const rootRoutes = require("./routes/rootRoutes");
+const loginRoutes = require("./routes/loginRoutes");
+const registerRoutes = require("./routes/registerRoutes");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -35,7 +36,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.use("/api/movies", movieRoutes);
-app.use("/", rootRoutes);
+app.use("/", loginRoutes);
+app.use("/", registerRoutes);
 
 // Async function to start the server after MongoDB connection is initialized
 async function startServer() {

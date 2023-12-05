@@ -1,12 +1,14 @@
 const express = require("express");
-const rootController = require("./../controllers/rootController");
+const rootController = require("./../controllers/loginController");
 const router = express.Router();
+
+
 router.route("/").get((req, res) => {
-  res.redirect("/home");
+  res.redirect("/login");
 });
 
 router
-  .route("/home")
+  .route("/login")
   .get(rootController.getUserLogin)
   .post(rootController.addUserLogin);
 
