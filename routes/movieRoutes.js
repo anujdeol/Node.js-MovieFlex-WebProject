@@ -7,7 +7,6 @@ router
   .get(movieController.getAllMovies)
   .post(movieController.addMovie);
 
-
   router
     .route("/home")
     .get(movieController.homePageLogin)

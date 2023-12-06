@@ -12,4 +12,10 @@ router
   .get(rootController.getUserLogin)
   .post(rootController.addUserLogin);
 
+  router
+  .route("/register")
+  .get(rootController.getUserRegister)
+  .post(rootController.addUserRegister);
+
+
 module.exports = router;
