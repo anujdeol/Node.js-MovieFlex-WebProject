@@ -5,6 +5,7 @@ const path = require("path");
 const database = require("./databaseConnection/connection");
 const movieRoutes = require("./routes/movieRoutes");
 const loginRoutes = require("./routes/loginRoutes");
+const clientSessions = require("client-sessions");
 //const registerRoutes = require("./routes/registerRoutes");
 
 const app = express();
@@ -34,10 +35,22 @@ app.set("view engine", ".hbs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+//setup session
+app.use(clientSessions({
+  cookieName: "session",
+  secret: "webproject",
+  duration: 1000, // 2 minutes
+  activeDuration: 1000 * 60 // 1 minute
+}));
+
 // Routes
 app.use("/api/movies", movieRoutes);
 app.use("/", loginRoutes);
 //app.use("/", registerRoutes);
+
+
+
+
 
 // Async function to start the server after MongoDB connection is initialized
 async function startServer() {

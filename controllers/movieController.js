@@ -1,21 +1,66 @@
 const movieModel = require("./../models/moviesSchema");
 
-
-//home page
-
-exports.homePageLogin = (req, res) => {
-  console.log("login page called");
-  res.render('login', { title: 'LoginPage' });
+// add movie form render
+exports.addMovie = (req, res) => {
+  console.log("movie page called");
+  res.render('addmovie', { title: 'Movie Page' });
 };
 
-exports.homePageRegister = (req, res) => {
-  console.log("register page called");
-  res.render('register', { title: 'Register Yourself!' });
+// addMovie
+
+//done
+exports.postMovie = (req, res) => {
+  const movieData = {
+    title: req.body.title,
+    year: req.body.year,
+    runtime: req.body.runtime,
+    released: req.body.released,
+    poster: req.body.poster,
+    plot: req.body.plot,
+    fullplot: req.body.fullplot,
+    lastupdated: req.body.lastupdated,
+    type: req.body.type,
+    directors: req.body.directors.split(',').map(dir => dir.trim()), // Split directors by comma and trim spaces
+    imdb: {
+      rating: req.body.imdb_rating,
+      votes: req.body.imdb_votes,
+      id: req.body.imdb_id,
+    },
+    cast: req.body.cast.split(',').map(actor => actor.trim()), // Split cast by comma and trim spaces
+    countries: req.body.countries.split(',').map(country => country.trim()), // Split countries by comma and trim spaces
+    genres: req.body.genres.split(',').map(genre => genre.trim()), // Split genres by comma and trim spaces
+    tomatoes: {
+      viewer: {
+        rating: req.body.tomatoes_rating,
+        numReviews: req.body.tomatoes_reviews,
+      },
+      lastUpdated: req.body.tomatoes_lastupdated,
+    },
+    num_mflix_comments: req.body.num_mflix_comments,
+  };
+
+  console.log("Adding movie");
+
+  const newMovie = new movieModel(movieData);
+
+  newMovie.save((err, movie) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    console.log("Movie added:", movie);
+    res.status(201).json({ message: 'Movie added successfully', movieId: movie._id });
+  });
 };
+
+
+
+
 
 //get all movies 
 //done
-// Assuming you have the necessary imports and setup for movieModel
+
+
 
 exports.getAllMovies = (req, res) => {
   const limit = req.body.limit || 5;
@@ -32,53 +77,6 @@ exports.getAllMovies = (req, res) => {
       res.render('showMovies', { movies });
   }).skip((page - 1) * 1).limit(limit);
 };
-
-
-// addMovie
-//done
-exports.addMovie = (req, res) => {
-  const movieData = {
-    title: req.body.title,
-    year: req.body.year,
-    runtime: req.body.runtime,
-    released: req.body.released,
-    poster: req.body.poster,
-    plot: req.body.plot,
-    fullplot: req.body.fullplot,
-    lastupdated: req.body.lastupdated,
-    type: req.body.type,
-    directors: req.body.directors,
-    imdb: {
-      rating: req.body.rating,
-      votes: req.body.votes,
-      id: req.body.id,
-    },
-    cast: req.body.cast,
-    countries: req.body.countries,
-    genres: req.body.genres,
-    tomatoes: {
-      viewer: {
-        rating: req.body.rating,
-        numReviews: req.body.numReviews,
-      },
-      lastUpdated: req.body.lastUpdated,
-    },
-    
-    num_mflix_comments: req.body.num_mflix_comments,
-  };
-
-  const newMovie = new movieModel(movieData);
-
-  newMovie.save((err, movie) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-    console.log("Movie added:", movie);
-    res.status(201).json({ message: 'Movie added successfully', movieId: movie._id });
-  });
-};
-
 
 
 //by ID
