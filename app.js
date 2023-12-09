@@ -6,10 +6,8 @@ const database = require("./databaseConnection/connection");
 const movieRoutes = require("./routes/movieRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const clientSessions = require("client-sessions");
-//const registerRoutes = require("./routes/registerRoutes");
-
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 
 // Set up Handlebars as the view engine
 app.engine(

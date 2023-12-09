@@ -2,7 +2,7 @@ const express = require("express");
 const movieController = require("./../controllers/movieController");
 const router = express.Router();
 
-
+//auth
 const ensureLoggedIn = (req, res, next) => {
   console.log("ensureLoggedIn middleware called");
   console.log("sessiondddd   "+req.session.user);
@@ -15,22 +15,26 @@ const ensureLoggedIn = (req, res, next) => {
   }
 };
 
+router
+.route("/home")
+.get(ensureLoggedIn, movieController.showHomePage);
+
 
 router
-  .route("/")
-  .get(ensureLoggedIn, movieController.getAllMovies);
+.route("/")
+.get(ensureLoggedIn, movieController.getAllMovies);
 
 
 router
   .route("/add")
-  .get(movieController.addMovie)
+  .get(ensureLoggedIn,movieController.addMovie)
   .post(movieController.postMovie)  
 
 router
   .route("/:id")
-  .get(movieController.getMovie)
-  .patch(movieController.updateMovie)
-  .delete(movieController.deleteMovie);
+  .get(ensureLoggedIn,movieController.getMovie)
+  .patch(ensureLoggedIn,movieController.updateMovie)
+  .delete(ensureLoggedIn,movieController.deleteMovie);
 
 
 

@@ -1,0 +1,21 @@
+  <h2>Fetch all movies</h2>
+    <form action="/api/movies/" method="GET">
+        <button type="submit">Fetch</button>
+    </form>
+
+
+<h2>Delete by ID</h2>
+    <form action="/api/movies/:id" method="DELETE">
+        <label for="id">ID to Delete:</label>
+        <input type="text" id="id" name="id" required>
+        <button type="submit">Delete</button>
+    </form>
+
+    <br>
+
+    <h2>Search by ID</h2>
+    <form action="/api/movies/:id" method="GET">
+        <label for="id">ID to Search:</label>
+        <input type="text" id="id" name="id" required>
+        <button type="submit">Search</button>
+    </form>

@@ -38,7 +38,7 @@ exports.addUserLogin = (req, res) => {
           };
 
         
-          res.redirect("/api/movies");
+          res.redirect("/api/movies/home");
         } else {
           // Passwords do not match
           console.log("Password does not match");

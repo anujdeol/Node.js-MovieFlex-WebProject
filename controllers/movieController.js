@@ -6,8 +6,12 @@ exports.addMovie = (req, res) => {
   res.render('addmovie', { title: 'Movie Page' });
 };
 
-// addMovie
+exports.showHomePage = (req, res) => {
+  console.log("home page called");
+  res.render("homePage", { title: "Hoem" });
+};
 
+// addMovie
 //done
 exports.postMovie = (req, res) => {
   const movieData = {
@@ -20,22 +24,23 @@ exports.postMovie = (req, res) => {
     fullplot: req.body.fullplot,
     lastupdated: req.body.lastupdated,
     type: req.body.type,
-    directors: req.body.directors.split(',').map(dir => dir.trim()), // Split directors by comma and trim spaces
+    directors: req.body.directors,
     imdb: {
-      rating: req.body.imdb_rating,
-      votes: req.body.imdb_votes,
-      id: req.body.imdb_id,
+      rating: req.body.rating,
+      votes: req.body.votes,
+      id: req.body.id,
     },
-    cast: req.body.cast.split(',').map(actor => actor.trim()), // Split cast by comma and trim spaces
-    countries: req.body.countries.split(',').map(country => country.trim()), // Split countries by comma and trim spaces
-    genres: req.body.genres.split(',').map(genre => genre.trim()), // Split genres by comma and trim spaces
+    cast: req.body.cast,
+    countries: req.body.countries,
+    genres: req.body.genres,
     tomatoes: {
       viewer: {
-        rating: req.body.tomatoes_rating,
-        numReviews: req.body.tomatoes_reviews,
+        rating: req.body.rating,
+        numReviews: req.body.numReviews,
       },
-      lastUpdated: req.body.tomatoes_lastupdated,
+      lastUpdated: req.body.lastUpdated,
     },
+    
     num_mflix_comments: req.body.num_mflix_comments,
   };
 
@@ -59,22 +64,21 @@ exports.postMovie = (req, res) => {
 
 //get all movies 
 //done
-
-
-
 exports.getAllMovies = (req, res) => {
-  const limit = req.body.limit || 5;
-  const page = req.body.page|| 1;
-  
+  const limit = req.body.limit|| 2;
+  console.log("limitttttt   " + limit);
+  const page = req.body.page ||1;
+  console.log("pagessss " + page);
 
-  movieModel.find({}, (err, movies) => {
-      if (err) {
-          console.error(err);
-          res.status(500).send('Internal Server Error');
-          return;
-      }
-
-      res.render('showMovies', { movies });
+  // use mongoose to get all movies in the database
+  movieModel.find({}, function (err, movies) {
+    console.log("$$$$$$$$$" + movies)
+    // if there is an error retrieving, send the error; otherwise, render the view
+    if (err) {
+      res.send(err);
+    } else {
+      res.render('showMovies', { movies: movies });
+    }
   }).skip((page - 1) * 1).limit(limit);
 };
 
@@ -83,12 +87,12 @@ exports.getAllMovies = (req, res) => {
 //done
 exports.getMovie = (req, res) => {
 
-  const movieId = req.params.id; // Assuming the movie ID is passed as a route parameter
-
+  const movieId = req.query.id; // Assuming the movie ID is passed as a route parameter
+console.log("SEARCH METHOD CALLED");
   movieModel.findById(movieId, (err, movie) => {
     if (err) res.status(500).send(err);
     if (!movie) res.status(404).json({ message: 'Movie not found' });
-    res.status(200).json(movie); // Return the found movie in JSON format
+    res.render('searchMovie', { movie });
   });
 
 
@@ -125,13 +129,15 @@ exports.updateMovie = (req, res) => {
 
 //delete movie
 exports.deleteMovie = (req, res) => {
+  console.log("delete method called");
 
-  const movieId = req.params.id; 
+  const movieId = req.query.id; 
 
   movieModel.findByIdAndRemove(movieId, (err, movie) => {
     if (err) res.status(500).send(err);
     if (!movie) res.status(404).json({ message: 'Movie not found' });
-    res.status(200).json({ message: 'Movie deleted successfully' });
+
+    console.log('Movie deleted successfully');
   });
 
 };
