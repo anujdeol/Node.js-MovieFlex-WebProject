@@ -23,7 +23,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
   },
   lastupdated: {
-    type: Date, // Corrected from String to Date
+    type: Date,
   },
   type: {
     type: String,

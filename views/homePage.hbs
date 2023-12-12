@@ -1,21 +1,39 @@
-  <h2>Fetch all movies</h2>
-    <form action="/api/movies/" method="GET">
-        <button type="submit">Fetch</button>
-    </form>
-
+<h2>Fetch all movies</h2>
+<form action="/api/movies/" method="GET">
+    <button type="submit">Fetch</button>
+</form>
 
 <h2>Delete by ID</h2>
-    <form action="/api/movies/:id" method="DELETE">
-        <label for="id">ID to Delete:</label>
-        <input type="text" id="id" name="id" required>
-        <button type="submit">Delete</button>
-    </form>
+<form action="/api/movies/:id" method="POST">
+  <!-- Use method-override for DELETE requests -->
+  <input type="hidden" name="_method" value="DELETE">
 
-    <br>
+  <!-- Label for the input field -->
+  <label for="deleteId">ID to Delete:</label>
 
-    <h2>Search by ID</h2>
-    <form action="/api/movies/:id" method="GET">
-        <label for="id">ID to Search:</label>
-        <input type="text" id="id" name="id" required>
-        <button type="submit">Search</button>
-    </form>
+  <!-- Input field for the movie ID -->
+  <input type="text" id="deleteId" name="id" required>
+
+  <!-- Submit button to trigger the form submission -->
+  <button type="submit">Delete</button>
+</form>
+
+
+<br>
+
+<h2>Search by ID</h2>
+<form action="/api/movies/:id" method="GET">
+    <label for="searchId">ID to Search:</label>
+    <input type="text" id="searchId" name="id" required>
+    <button type="submit">Search</button>
+</form>
+
+<h2>Add your movie</h2>
+<form action="/api/movies/add" method="GET">
+    <button type="submit">Add Movie</button>
+</form>
+
+<h2>Update Movie</h2>
+<form action="/api/movies/updateRender" method="GET">
+    <button type="submit">Update Movie</button>
+</form>

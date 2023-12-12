@@ -1,37 +1,24 @@
-/* Reset and global styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f8f8f8;
     color: #333;
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
 }
 
 /* Header styles */
 .header {
     background-color: #333;
     color: #fff;
-    padding: 10px;
+    padding: 20px 0;
     text-align: center;
-}
-
-.header-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .header h2 {
     margin: 0;
+    font-size: 24px;
 }
 
 .styled-button {
@@ -39,7 +26,7 @@ body {
     color: #fff;
     font-size: 16px;
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 5px;
     margin-right: 20px;
     cursor: pointer;
@@ -52,49 +39,63 @@ body {
 
 /* Content styles */
 .content {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background-color: #fff;
+    max-width: 2000px;
+    flex: 1;
+   
+    padding: 40px;
+    background-color: #f0e8e8;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(8, 217, 175, 0.1);
-    flex: 1; /* Takes remaining height */
+    box-shadow: 0 4px 20px rgba(8, 217, 175, 0.1);
+}
+
+/* Footer styles */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
 }
 
 /* Form styles */
-#loginForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.form-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     font-weight: bold;
+    font-size: 16px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
 }
 
 .form-group button {
     background-color: #4caf50;
     color: #fff;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    font-size: 16px;
 }
 
 .form-group button:hover {
@@ -104,53 +105,97 @@ body {
 /* Footer styles */
 .footer {
     background-color: #333;
-    color:  #52f673;
+    color: #fff;
     text-align: center;
-    padding: 20px;
+    padding: 20px 0;
 }
 
 
-/* Add this CSS to your existing stylesheet or create a new one */
+/* Add this to your existing myDesign.css or create a new CSS file */
 
-#RegisterForm {
-    max-width: 300px;
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.styled-button {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.styled-button:hover {
+    background-color: #0056b3;
+}
+
+.header-title {
+    text-align: center;
+}
+
+.header-title h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+
+
+/* Form container */
+form {
+    max-width: 800px; /* Adjust the max-width as needed */
     margin: auto;
     padding: 20px;
-    border-radius: 5px;
     background-color: #fff;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  div {
-    margin-bottom: 15px;
-  }
-  
-  label {
+}
+
+/* Form labels */
+label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
-  }
-  
-  input {
+    font-size: 16px;
+}
+
+/* Form inputs */
+input,
+textarea,
+select {
     width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+    padding: 12px;
+    margin-bottom: 16px;
     border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    background-color: #4caf50;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Form button */
+button {
+    background-color: #007bff;
     color: #fff;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     width: 100%;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 600px) {
+    form {
+        padding: 10px;
+    }
+}

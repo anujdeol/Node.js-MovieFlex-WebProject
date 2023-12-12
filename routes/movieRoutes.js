@@ -2,10 +2,10 @@ const express = require("express");
 const movieController = require("./../controllers/movieController");
 const router = express.Router();
 
-//auth
+// Auth middleware
 const ensureLoggedIn = (req, res, next) => {
   console.log("ensureLoggedIn middleware called");
-  console.log("sessiondddd   "+req.session.user);
+  console.log("sessiondddd   " + req.session.user);
   if (req.session && req.session.user) {
     console.log("User is logged in");
     next();
@@ -16,26 +16,28 @@ const ensureLoggedIn = (req, res, next) => {
 };
 
 router
-.route("/home")
-.get(ensureLoggedIn, movieController.showHomePage);
-
+  .route("/home")
+  .get(ensureLoggedIn, movieController.showHomePage);
 
 router
-.route("/")
-.get(ensureLoggedIn, movieController.getAllMovies);
-
+  .route("/")
+  .get(ensureLoggedIn, movieController.getAllMovies);
 
 router
   .route("/add")
-  .get(ensureLoggedIn,movieController.addMovie)
-  .post(movieController.postMovie)  
+  .get(ensureLoggedIn, movieController.addMovie)
+  .post(movieController.postMovie);
 
-router
+  router
+  .route("/updateRender")
+  .get(ensureLoggedIn, movieController.updateRender);
+
+  router
   .route("/:id")
-  .get(ensureLoggedIn,movieController.getMovie)
-  .patch(ensureLoggedIn,movieController.updateMovie)
-  .delete(ensureLoggedIn,movieController.deleteMovie);
+  .get(ensureLoggedIn, movieController.getMovie)
+  .post(ensureLoggedIn, movieController.updateMovie)
+  .delete(ensureLoggedIn, movieController.deleteMovie);
 
 
 
-  module.exports=router;
+module.exports = router;
