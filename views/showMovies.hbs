@@ -1,21 +1,105 @@
-<h1>List of Movies</h1>
-  <table>
-    <thead>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tbody tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    div.pagination {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    div.pagination a, div.pagination button, div.pagination strong {
+      display: inline-block;
+      padding: 8px 16px;
+      text-decoration: none;
+      color: #333;
+      border: 1px solid #ddd;
+      margin: 0 4px;
+      border-radius: 4px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    div.pagination strong {
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>List of Movies</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Runtime</th>
+      <th>Released</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each movies}}
       <tr>
-        <th>Title</th>
-        <th>Year</th>
-        <th>Runtime</th>
-        <th>Released</th>
+        <td>{{this.title}}</td>
+        <td>{{this.year}}</td>
+        <td>{{this.runtime}}</td>
+        <td>{{this.released}}</td>
       </tr>
-    </thead>
-    <tbody>
-      {{#each movies}}
-        <tr>
-          <td>{{this.title}}</td>
-          <td>{{this.year}}</td>
-          <td>{{this.runtime}}</td>
-          <td>{{this.released}}</td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
+    {{/each}}
+  </tbody>
+</table>
+
+<div class="pagination">
+  {{#if pagination.hasPreviousPages}}
+    <button class="pagination-button" onclick="goToPage(1, {{pagination.limit}})">First</button>
+    <button class="pagination-button" onclick="goToPage({{pagination.previous}}, {{pagination.limit}})">Previous</button>
+  {{/if}}
+
+  {{#each pagination.pages}}
+    {{#if this.isCurrent}}
+      <strong>{{this}}</strong>
+    {{else}}
+      <button class="pagination-button" onclick="goToPage({{this}}, {{pagination.limit}})">{{this}}</button>
+    {{/if}}
+  {{/each}}
+
+  {{#if pagination.hasNextPages}}
+    <button class="pagination-button" onclick="goToPage({{pagination.next}}, {{pagination.limit}})">Next</button>
+    <button class="pagination-button" onclick="goToPage({{pagination.totalPages}}, {{pagination.limit}})">Last</button>
+  {{/if}}
+</div>
+
+<script>
+  // JavaScript function to handle button clicks
+  function goToPage(page, limit) {
+    window.location.href = `/movies?page=${page}&limit=${limit}`;
+  }
+</script>

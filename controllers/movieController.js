@@ -1,4 +1,5 @@
 const movieModel = require("./../models/moviesSchema");
+const paginate = require('paginate');
 
 // add movie form render
 exports.addMovie = (req, res) => {
@@ -74,24 +75,31 @@ exports.postMovie = (req, res) => {
 
 //get all movies 
 //done
-exports.getAllMovies = (req, res) => {
-  const limit = req.body.limit|| 2;
-  console.log("limitttttt   " + limit);
-  const page = req.body.page ||1;
-  console.log("pagessss " + page);
+exports.getAllMovies = async (req, res) => {
+  const limit = parseInt(req.query.limit) || 5;
+  const page = parseInt(req.query.page) || 1;
 
-  // use mongoose to get all movies in the database
-  movieModel.find({}, function (err, movies) {
-    console.log("$$$$$$$$$" + movies)
-    // if there is an error retrieving, send the error; otherwise, render the view
-    if (err) {
-      res.send(err);
-    } else {
-      res.render('showMovies', { movies: movies });
-    }
-  }).skip((page - 1) * 1).limit(limit);
+  try {
+    // Use mongoose to get the total count of movies in the database
+    const totalMovies = await movieModel.countDocuments();
+
+    const movies = await movieModel.find({})
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const pageCount = Math.ceil(totalMovies / limit);
+
+    const pagination = paginate(page, pageCount);
+
+    res.render('showMovies', {
+      movies: movies,
+      pageCount: pageCount,
+      pagination: pagination
+    });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
-
 
 //by ID
 //done
