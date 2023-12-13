@@ -10,7 +10,6 @@ async function initializeMongoDB() {
   return new Promise((resolve, reject) => {
     // Connect to MongoDB
     mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
-
     // Check if the connection is successful
     const db = mongoose.connection;
     db.on("error", (err) => {
