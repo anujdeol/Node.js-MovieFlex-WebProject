@@ -16,6 +16,11 @@ exports.updateRender = (req, res) => {
   res.render("updateMovie", { title: "Update" });
 };
 
+exports.renderDeleteMovie = (req, res) => {
+  console.log("delete page called");
+  res.render("deleteRecord", { title: "Delete" });
+};
+
 // addMovie
 //done
 exports.postMovie = (req, res) => {
@@ -103,6 +108,23 @@ console.log("SEARCH METHOD CALLED "+movieId);
 
 };
 
+exports.deleteMovie = (req, res) => {
+  const movieId = req.body.id; // Use req.params.id for DELETE requests
+console.log(movieId+"  delete method called");
+  // Assuming movieModel is your Mongoose model
+  movieModel.findByIdAndRemove(movieId, (err, movie) => {
+    if (err) {
+      console.error('Error deleting movie:', err);
+      res.status(500).send(err);
+    } else if (!movie) {
+      res.status(404).json({ message: 'Movie not testing found' });
+    } else {
+      console.log('Movie deleted successfully:', movie);
+      res.render('updateMovies', { title: "Update" });
+
+    }
+  })
+};
 
 
 //DONE
@@ -152,7 +174,8 @@ exports.updateMovie = (req, res) => {
         res.status(404).json({ message: 'Movie not found' });
       } else {
         console.log(movie);
-        res.status(200).json(movie); // Return the updated movie in JSON format
+     
+        res.status(404).json({ message: 'Record Updated Successfully' });
       }
     }
   );
@@ -164,21 +187,8 @@ exports.addMovie = (req, res) => {
   res.render("addMovie", { title: "Add" });
 };
 
-//delete movie
-exports.deleteMovie = (req, res) => {
-  const movieId = req.params.id; // Use req.params.id for DELETE requests
 
-  // Assuming movieModel is your Mongoose model
-  movieModel.findByIdAndRemove(movieId, (err, movie) => {
-    if (err) {
-      console.error('Error deleting movie:', err);
-      res.status(500).send(err);
-    } else if (!movie) {
-      res.status(404).json({ message: 'Movie not found' });
-    } else {
-      console.log('Movie deleted successfully:', movie);
-      res.redirect('/'); // Redirect to the desired page after deletion
-    }
-  });
-};
+
+
+//delete movie
 

@@ -1,4 +1,14 @@
-<table border="1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requested Movie Data</title>
+</head>
+<body>
+    <h1>Here is your requested movie data:</h1>
+    <table border="1">
         <tr>
             <th>Title</th>
             <td>{{ movie.title }}</td>
@@ -15,15 +25,70 @@
             <th>Released</th>
             <td>{{ movie.released }}</td>
         </tr>
- 
         <tr>
             <th>Plot</th>
             <td>{{ movie.plot }}</td>
         </tr>
-
         <tr>
-            <th>IMDb Rating</th>
-            <td>{{ movie.imdb.rating }}</td>
+            <th>Full Plot</th>
+            <td>{{ movie.fullplot }}</td>
         </tr>
-
+        <tr>
+            <th>Last Updated</th>
+            <td>{{ movie.lastupdated }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ movie.type }}</td>
+        </tr>
+        <tr>
+            <th>Directors</th>
+            <td>{{ movie.directors }}</td>
+        </tr>
+        <tr>
+            <th>IMDb Votes</th>
+            <td>{{ movie.imdb.votes }}</td>
+        </tr>
+        <tr>
+            <th>IMDb ID</th>
+            <td>{{ movie.imdb.id }}</td>
+        </tr>
+        <tr>
+            <th>Cast</th>
+            <td>{{ movie.cast }}</td>
+        </tr>
+        <tr>
+            <th>Countries</th>
+            <td>{{ movie.countries }}</td>
+        </tr>
+        <tr>
+            <th>Genres</th>
+            <td>{{ movie.genres }}</td>
+        </tr>
+        <tr>
+            <th>Tomatoes Viewer Rating</th>
+            <td>{{ movie.tomatoes.viewer.rating }}</td>
+        </tr>
+        <tr>
+            <th>Tomatoes Num Reviews</th>
+            <td>{{ movie.tomatoes.viewer.numReviews }}</td>
+        </tr>
+        <tr>
+            <th>Tomatoes Last Updated</th>
+            <td>{{ movie.tomatoes.lastUpdated }}</td>
+        </tr>
+        <tr>
+            <th>Number of Mflix Comments</th>
+            <td>{{ movie.num_mflix_comments }}</td>
+        </tr>
     </table>
+
+    <h1>Redirecting to the home page...</h1>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = '/api/movies/home'; 
+        }, 5000); 
+    </script>
+</body>
+</html>

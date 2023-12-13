@@ -32,12 +32,16 @@ router
   .route("/updateRender")
   .get(ensureLoggedIn, movieController.updateRender);
 
+
+  router
+  .route("/delete")
+  .post(ensureLoggedIn, movieController.deleteMovie);
+
+
   router
   .route("/:id")
   .get(ensureLoggedIn, movieController.getMovie)
   .post(ensureLoggedIn, movieController.updateMovie)
-  .delete(ensureLoggedIn, movieController.deleteMovie);
-
 
 
 module.exports = router;

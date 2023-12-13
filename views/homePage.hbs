@@ -3,21 +3,15 @@
     <button type="submit">Fetch</button>
 </form>
 
+
 <h2>Delete by ID</h2>
-<form action="/api/movies/:id" method="POST">
-  <!-- Use method-override for DELETE requests -->
-  <input type="hidden" name="_method" value="DELETE">
-
-  <!-- Label for the input field -->
-  <label for="deleteId">ID to Delete:</label>
-
+<form action="/api/movies/delete" method="POST">
+  <label for="id">ID to Delete:</label>
   <!-- Input field for the movie ID -->
-  <input type="text" id="deleteId" name="id" required>
-
+  <input type="text" id="id" name="id" required>
   <!-- Submit button to trigger the form submission -->
   <button type="submit">Delete</button>
 </form>
-
 
 <br>
 
