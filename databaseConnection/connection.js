@@ -9,7 +9,7 @@ const connectionString = process.env.DATABASE;
 async function initializeMongoDB() {
   return new Promise((resolve, reject) => {
     // Connect to MongoDB
-    mongoose.connect("mongodb+srv://anujdeol:Akku132@cluster0.anmrs0s.mongodb.net/sample_mflix", { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
 
     // Check if the connection is successful
     const db = mongoose.connection;
