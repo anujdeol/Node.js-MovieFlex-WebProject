@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "movies project semester 3",
   "main": "app.js",
-  "code": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
